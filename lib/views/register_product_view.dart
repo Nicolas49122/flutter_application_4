@@ -6,29 +6,28 @@ class RegisterProductView extends StatelessWidget {
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
 
-  void _registerProduct(BuildContext context) {
-    final name = _nameController.text.trim();
-    final priceText = _priceController.text.trim();
+void _registerProduct(BuildContext context) {
+  final name = _nameController.text.trim();
+  final priceText = _priceController.text.trim();
 
-    if (name.isEmpty || priceText.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Completa todos los campos')));
-      return;
-    }
-
-    final price = double.tryParse(priceText);
-    if (price == null || price <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Precio inválido')));
-      return;
-    }
-
-    Product newProduct = Product(name: name, price: price);
-    ProductData.productList.add(newProduct);
-
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Producto registrado')));
-
-    _nameController.clear();
-    _priceController.clear();
+  if (name.isEmpty || priceText.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Completa todos los campos')));
+    return;
   }
+
+  final price = double.tryParse(priceText);
+  if (price == null || price <= 0) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Precio inválido')));
+    return;
+  }
+
+  Product newProduct = Product(name: name, price: price);
+  ProductData.productList.add(newProduct);
+
+  // Redireccionar al listado de productos
+  Navigator.pushReplacementNamed(context, '/home');
+}
+
 
   @override
   Widget build(BuildContext context) {
